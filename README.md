@@ -48,224 +48,206 @@ net start MongoDB
 
 ---
 
-## 🚀 Installation Étape par Étape
+## 🚀 Installation — Étape par Étape
 
-🚀 Installation Étape par Étape
-🧩 Étape 1 – Cloner le projet depuis GitHub
+### 🧩 Étape 1 — Cloner le projet depuis GitHub
+Au lieu de créer manuellement les dossiers, clonez directement le dépôt :
 
-Au lieu de créer les dossiers à la main, vous pouvez directement récupérer tout le projet depuis ce dépôt :
-
-# Va dans le dossier où tu veux installer le projet
+```bash
+# Place-toi dans le dossier où tu veux installer le projet (ex. Bureau)
 cd C:\Users\TonNom\Desktop
 
-# Clone le dépôt GitHub
+# Clone le dépôt
 git clone https://github.com/koala090/school-management.git
 
 # Entre dans le dossier du projet
 cd school-management
+✅ Le projet est maintenant téléchargé avec la structure complète (backend/ + frontend/).
 
-
-✅ Le projet est maintenant téléchargé avec la structure complète :
-backend/ + frontend/ déjà prêts à être utilisés.
-
-⚙️ Étape 2 – Installer le Backend
+⚙️ Étape 2 — Installer le backend
+bash
+Copy code
+# Va dans le dossier backend
 cd backend
 
 # Installe les dépendances
 npm install
+👉 Vérifie (ou crée) le fichier .env à la racine de backend/ :
 
-
-Vérifie le fichier .env (tu peux le modifier si besoin) :
-
+env
+Copy code
 MONGODB_URI=mongodb://localhost:27017/school_db
 JWT_SECRET=your_super_secret_key_12345
 PORT=5000
-
+Modifie MONGODB_URI si tu utilises MongoDB Atlas.
 
 Lance le backend :
 
+bash
+Copy code
+# (optionnel) insère les données de test
 npm run seed
+
+# démarre le serveur en dev
 npm run dev
+✅ Tu dois voir un message du type :
 
-
-✅ Tu dois voir :
-
+arduino
+Copy code
 🚀 Server running on http://localhost:5000
+🖥️ Étape 3 — Installer le frontend
+Ouvre un nouveau terminal (pour garder le backend en cours) puis :
 
-🖥️ Étape 3 – Installer le Frontend
-
-Dans un nouveau terminal :
-
+bash
+Copy code
+# Va dans le dossier frontend
 cd frontend
 
-# Installe les dépendances du frontend
+# Installe les dépendances
 npm install
 
 # Lance le serveur de développement
 npm run dev
-
-
 ✅ Tu dois voir :
 
+arduino
+Copy code
 Local:   http://localhost:5173/
+🎯 Tester l’application (mode rapide)
+Ouvre deux terminaux (ou onglets) :
 
-🎯 Tester l’application
+Terminal 1
 
-Ouvre deux PowerShell :
-
-Terminal 1 :
-
-cd backend
+bash
+Copy code
+cd school-management\backend
 npm run dev
+Terminal 2
 
-
-Terminal 2 :
-
-cd frontend
+bash
+Copy code
+cd school-management\frontend
 npm run dev
+Ouvre ton navigateur à : http://localhost:5173
 
+Compte de test :
 
-Ensuite, va sur : http://localhost:5173
-
-Connexion de test :
-
+graphql
+Copy code
 Email: parent1@gmail.com
 Mot de passe: parent1@123
-
 ⚠️ Dépannage (Windows)
-❌ MongoDB n’a pas démarré
-# Ouvre PowerShell en ADMIN
+MongoDB n’a pas démarré
+
+bash
+Copy code
+# Ouvrir PowerShell en tant qu'administrateur
 net start MongoDB
+Le port 5000 ou 5173 est déjà utilisé
 
-❌ Port 5000 ou 5173 déjà utilisé
+bash
+Copy code
 netstat -ano | findstr :5000
+# puis, si nécessaire
 taskkill /PID <PID> /F
+Commande npm introuvable
 
-❌ Commande npm introuvable
+Node.js n’est pas correctement installé : redémarre le PC ou réinstalle Node.js en cochant "Add to PATH".
 
-Node.js n’est pas bien installé.
+Erreur Cannot find module
 
-Redémarre ton PC ou réinstalle Node.js avec "Add to PATH" coché.
-
-❌ "Cannot find module"
+bash
+Copy code
+# Supprime et réinstalle les dépendances
 rm -r node_modules
 rm package-lock.json
 npm install
+Utilisation de MongoDB Atlas
 
-❌ Problème avec MongoDB Atlas
+Dans backend/.env, remplace MONGODB_URI par ta chaîne Atlas :
 
-Dans .env, remplace :
-
+env
+Copy code
 MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/school_db
+Remplace user et password par tes identifiants Atlas.
 
-
-(Remplace user et password par tes identifiants Atlas.)
-
-## 📁 Structure détaillée du projet
-
-
-
+📁 Structure détaillée du projet
+pgsql
+Copy code
 C:\Users\TonNom\Desktop\school-management
 ├── backend
-│ ├── server.js
-│ ├── package.json
-│ ├── .env
-│ ├── config
-│ │ └── db.js
-│ │
-│ ├── routes
-│ │ ├── auth.js
-│ │ ├── notes.js
-│ │ └── absences.js
-│ │
-│ ├── middleware
-│ │ └── auth.js
-│ │
-│ ├── models
-│ │ ├── User.js
-│ │ ├── Note.js
-│ │ └── Absence.js
-│ │
-│ ├── controllers
-│ │ ├── authController.js
-│ │ ├── noteController.js
-│ │ └── absenceController.js
-│ │
-│ └── seeds
-│ └── seedDB.js
-│
+│   ├── server.js
+│   ├── package.json
+│   ├── .env
+│   ├── config
+│   │   └── db.js
+│   ├── routes
+│   │   ├── auth.js
+│   │   ├── notes.js
+│   │   └── absences.js
+│   ├── middleware
+│   │   └── auth.js
+│   ├── models
+│   │   ├── User.js
+│   │   ├── Note.js
+│   │   └── Absence.js
+│   ├── controllers
+│   │   ├── authController.js
+│   │   ├── noteController.js
+│   │   └── absenceController.js
+│   └── seeds
+│       └── seedDB.js
 └── frontend
-├── index.html
-├── package.json
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-│
-└── src
-├── main.jsx
-├── App.jsx
-├── index.css
-│
-├── assets
-│ └── logo.png
-│
-├── components
-│ ├── Navbar.jsx
-│ ├── Sidebar.jsx
-│ ├── TableNotes.jsx
-│ ├── TableAbsences.jsx
-│ └── ProtectedRoute.jsx
-│
-├── context
-│ └── AuthContext.jsx
-│
-├── pages
-│ ├── Login.jsx
-│ ├── DashboardParent.jsx
-│ ├── DashboardProf.jsx
-│ ├── Notes.jsx
-│ └── Absences.jsx
-│
-└── utils
-└── api.js
+    ├── index.html
+    ├── package.json
+    ├── vite.config.js
+    ├── tailwind.config.js
+    ├── postcss.config.js
+    └── src
+        ├── main.jsx
+        ├── App.jsx
+        ├── index.css
+        ├── assets
+        │   └── logo.png
+        ├── components
+        │   ├── Navbar.jsx
+        │   ├── Sidebar.jsx
+        │   ├── TableNotes.jsx
+        │   ├── TableAbsences.jsx
+        │   └── ProtectedRoute.jsx
+        ├── context
+        │   └── AuthContext.jsx
+        ├── pages
+        │   ├── Login.jsx
+        │   ├── DashboardParent.jsx
+        │   ├── DashboardProf.jsx
+        │   ├── Notes.jsx
+        │   └── Absences.jsx
+        └── utils
+            └── api.js
+🧠 Description rapide
+Backend
 
+server.js — point d’entrée Express.
 
----
+config/db.js — connexion à MongoDB.
 
-### 🧠 Description rapide
+routes/ — routes API (auth, notes, absences).
 
-#### 🗄️ Backend
-- **server.js** → point d’entrée du serveur Express.  
-- **config/db.js** → configuration et connexion à MongoDB.  
-- **routes/** → toutes les routes de l’API (`auth`, `notes`, `absences`).  
-- **middleware/** → middlewares personnalisés, comme l’authentification JWT.  
-- **models/** → schémas Mongoose (User, Note, Absence).  
-- **controllers/** → logique métier de chaque fonctionnalité.  
-- **seeds/** → scripts pour insérer des données de test.  
-- **.env** → variables d’environnement (clé JWT, URI MongoDB, port).  
+middleware/ — middleware JWT (auth).
 
-#### 💻 Frontend
-- **index.html** → fichier racine du projet React (Vite).  
-- **src/** → dossier principal du code source React.  
-  - **App.jsx** → structure principale de l’application.  
-  - **components/** → éléments réutilisables (tableaux, navigation, etc.).  
-  - **context/** → gestion du contexte d’authentification.  
-  - **pages/** → pages principales de l’application (login, dashboard, etc.).  
-  - **utils/api.js** → configuration Axios pour l’API backend.  
-- **tailwind.config.js** et **postcss.config.js** → configuration du style.  
-- **vite.config.js** → configuration de Vite (serveur de dev, plugins).  
+models/ — schémas Mongoose (User, Note, Absence).
 
----
+controllers/ — logique métier.
 
+seeds/seedDB.js — données de test.
 
-🎉 C’est prêt !
+.env — variables d’environnement.
 
-Une fois les deux serveurs lancés, tu peux :
+Frontend
 
-✅ Te connecter en tant que parent
-✅ Consulter les notes et absences
-✅ Te connecter en tant que professeur
-✅ Créer / modifier / supprimer des notes et absences
+index.html — racine Vite/React.
 
-💬 Besoin d’aide ?
-Ouvre une issue sur GitHub ou pose ta question ici !
+src/ — code source React (components, pages, context, utils).
+
+vite.config.js, tailwind.config.js, postcss.config.js — configurations.
