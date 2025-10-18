@@ -50,270 +50,222 @@ net start MongoDB
 
 ## 🚀 Installation Étape par Étape
 
-### 🧩 Étape 1 – Préparer les dossiers
+🚀 Installation Étape par Étape
+🧩 Étape 1 – Cloner le projet depuis GitHub
 
-1. Crée un dossier sur ton bureau : **school-management**
-2. Ouvre PowerShell dans ce dossier :
+Au lieu de créer les dossiers à la main, vous pouvez directement récupérer tout le projet depuis ce dépôt :
 
-   * `Shift + clic droit` → *Ouvrir PowerShell ici*
-   * ou tape `powershell` dans la barre d’adresse.
+# Va dans le dossier où tu veux installer le projet
+cd C:\Users\TonNom\Desktop
 
-```bash
-cd C:\Users\TonNom\Desktop\school-management
-```
+# Clone le dépôt GitHub
+git clone https://github.com/koala090/school-management.git
 
----
+# Entre dans le dossier du projet
+cd school-management
 
-### ⚙️ Étape 2 – Configuration du Backend
 
-```bash
-# Crée le dossier backend
-mkdir backend
+✅ Le projet est maintenant téléchargé avec la structure complète :
+backend/ + frontend/ déjà prêts à être utilisés.
+
+⚙️ Étape 2 – Installer le Backend
 cd backend
 
-# Initialise le projet Node
-npm init -y
-
 # Installe les dépendances
-npm install express mongoose jsonwebtoken cors dotenv nodemon
-```
+npm install
 
-Crée les fichiers suivants :
 
-#### `backend/package.json`
+Vérifie le fichier .env (tu peux le modifier si besoin) :
 
-```json
-{
-  "name": "school-management-backend",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js",
-    "seed": "node seeds/seedDB.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.0.0",
-    "jsonwebtoken": "^9.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  }
-}
-```
-
-#### `backend/.env`
-
-```env
 MONGODB_URI=mongodb://localhost:27017/school_db
 JWT_SECRET=your_super_secret_key_12345
 PORT=5000
-```
 
-Crée les dossiers :
-
-```bash
-mkdir config routes middleware seeds
-```
-
-Copie les fichiers correspondants :
-
-```
-server.js → backend/
-config/db.js → backend/config/
-middleware/auth.js → backend/middleware/
-routes/auth.js → backend/routes/
-routes/notes.js → backend/routes/
-routes/absences.js → backend/routes/
-seeds/seedDB.js → backend/seeds/
-```
 
 Lance le backend :
 
-```bash
 npm run seed
 npm run dev
-```
+
 
 ✅ Tu dois voir :
 
-```
 🚀 Server running on http://localhost:5000
-```
 
----
+🖥️ Étape 3 – Installer le Frontend
 
-### 🖥️ Étape 3 – Configuration du Frontend
+Dans un nouveau terminal :
 
-Ouvre un **nouveau PowerShell** dans le dossier `school-management` :
-
-```bash
-cd C:\Users\TonNom\Desktop\school-management
-mkdir frontend
 cd frontend
 
-npm init -y
-npm install react react-dom react-router-dom axios
-npm install -D vite @vitejs/plugin-react tailwindcss autoprefixer postcss
-```
+# Installe les dépendances du frontend
+npm install
 
-Crée les dossiers :
-
-```bash
-mkdir src src\pages src\components src\context src\utils
-```
-
-Crée les fichiers :
-
-```
-frontend/vite.config.js
-frontend/tailwind.config.js
-frontend/postcss.config.js
-frontend/index.html
-frontend/src/index.css
-frontend/src/main.jsx
-frontend/src/App.jsx
-```
-
-Structure :
-
-```
-src/
-  ├── context/AuthContext.jsx
-  ├── utils/api.js
-  ├── pages/Login.jsx
-  ├── pages/DashboardParent.jsx
-  ├── pages/DashboardProf.jsx
-  ├── components/TableNotes.jsx
-  └── components/TableAbsences.jsx
-```
-
-Lance le frontend :
-
-```bash
+# Lance le serveur de développement
 npm run dev
-```
+
 
 ✅ Tu dois voir :
 
-```
 Local:   http://localhost:5173/
-```
 
----
-
-## 🎯 Tester l’application
+🎯 Tester l’application
 
 Ouvre deux PowerShell :
 
-**Terminal 1 :**
+Terminal 1 :
 
-```bash
 cd backend
 npm run dev
-```
 
-**Terminal 2 :**
 
-```bash
+Terminal 2 :
+
 cd frontend
 npm run dev
-```
 
-Ensuite, va sur : [http://localhost:5173](http://localhost:5173)
+
+Ensuite, va sur : http://localhost:5173
 
 Connexion de test :
 
-```
 Email: parent1@gmail.com
 Mot de passe: parent1@123
-```
 
----
-
-## ⚠️ Dépannage (Windows)
-
-### ❌ MongoDB n’a pas démarré
-
-```bash
+⚠️ Dépannage (Windows)
+❌ MongoDB n’a pas démarré
 # Ouvre PowerShell en ADMIN
 net start MongoDB
-```
 
-### ❌ Port 5000 ou 5173 déjà utilisé
-
-```bash
+❌ Port 5000 ou 5173 déjà utilisé
 netstat -ano | findstr :5000
 taskkill /PID <PID> /F
-```
 
-### ❌ Commande `npm` introuvable
+❌ Commande npm introuvable
 
-* Node.js n’est pas bien installé.
-* Redémarre ton PC ou réinstalle Node.js avec **"Add to PATH"** coché.
+Node.js n’est pas bien installé.
 
-### ❌ "Cannot find module"
+Redémarre ton PC ou réinstalle Node.js avec "Add to PATH" coché.
 
-```bash
+❌ "Cannot find module"
 rm -r node_modules
 rm package-lock.json
 npm install
-```
 
-### ❌ Problème avec MongoDB Atlas
+❌ Problème avec MongoDB Atlas
 
-Dans `.env`, remplace :
+Dans .env, remplace :
 
-```env
 MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/school_db
-```
 
-(Remplace `user` et `password` par tes identifiants Atlas.)
+
+(Remplace user et password par tes identifiants Atlas.)
+
+## 📁 Structure détaillée du projet
+
+
+
+C:\Users\TonNom\Desktop\school-management
+├── backend
+│ ├── server.js
+│ ├── package.json
+│ ├── .env
+│ ├── config
+│ │ └── db.js
+│ │
+│ ├── routes
+│ │ ├── auth.js
+│ │ ├── notes.js
+│ │ └── absences.js
+│ │
+│ ├── middleware
+│ │ └── auth.js
+│ │
+│ ├── models
+│ │ ├── User.js
+│ │ ├── Note.js
+│ │ └── Absence.js
+│ │
+│ ├── controllers
+│ │ ├── authController.js
+│ │ ├── noteController.js
+│ │ └── absenceController.js
+│ │
+│ └── seeds
+│ └── seedDB.js
+│
+└── frontend
+├── index.html
+├── package.json
+├── vite.config.js
+├── tailwind.config.js
+├── postcss.config.js
+│
+└── src
+├── main.jsx
+├── App.jsx
+├── index.css
+│
+├── assets
+│ └── logo.png
+│
+├── components
+│ ├── Navbar.jsx
+│ ├── Sidebar.jsx
+│ ├── TableNotes.jsx
+│ ├── TableAbsences.jsx
+│ └── ProtectedRoute.jsx
+│
+├── context
+│ └── AuthContext.jsx
+│
+├── pages
+│ ├── Login.jsx
+│ ├── DashboardParent.jsx
+│ ├── DashboardProf.jsx
+│ ├── Notes.jsx
+│ └── Absences.jsx
+│
+└── utils
+└── api.js
+
 
 ---
 
-## 📁 Structure finale
+### 🧠 Description rapide
 
-```
-C:\Users\TonNom\Desktop\school-management\
-├── backend/
-│   ├── server.js
-│   ├── package.json
-│   ├── .env
-│   ├── config/
-│   ├── routes/
-│   ├── middleware/
-│   └── seeds/
-└── frontend/
-    ├── index.html
-    ├── package.json
-    ├── vite.config.js
-    ├── tailwind.config.js
-    └── src/
-```
+#### 🗄️ Backend
+- **server.js** → point d’entrée du serveur Express.  
+- **config/db.js** → configuration et connexion à MongoDB.  
+- **routes/** → toutes les routes de l’API (`auth`, `notes`, `absences`).  
+- **middleware/** → middlewares personnalisés, comme l’authentification JWT.  
+- **models/** → schémas Mongoose (User, Note, Absence).  
+- **controllers/** → logique métier de chaque fonctionnalité.  
+- **seeds/** → scripts pour insérer des données de test.  
+- **.env** → variables d’environnement (clé JWT, URI MongoDB, port).  
+
+#### 💻 Frontend
+- **index.html** → fichier racine du projet React (Vite).  
+- **src/** → dossier principal du code source React.  
+  - **App.jsx** → structure principale de l’application.  
+  - **components/** → éléments réutilisables (tableaux, navigation, etc.).  
+  - **context/** → gestion du contexte d’authentification.  
+  - **pages/** → pages principales de l’application (login, dashboard, etc.).  
+  - **utils/api.js** → configuration Axios pour l’API backend.  
+- **tailwind.config.js** et **postcss.config.js** → configuration du style.  
+- **vite.config.js** → configuration de Vite (serveur de dev, plugins).  
 
 ---
 
-## 🎉 C’est prêt !
+
+🎉 C’est prêt !
 
 Une fois les deux serveurs lancés, tu peux :
 
-✅ Te connecter en tant que **parent**
-✅ Consulter les **notes** et **absences**
-✅ Te connecter en tant que **professeur**
+✅ Te connecter en tant que parent
+✅ Consulter les notes et absences
+✅ Te connecter en tant que professeur
 ✅ Créer / modifier / supprimer des notes et absences
 
----
-
-💬 **Besoin d’aide ?**
-Ouvre une *issue* sur GitHub ou pose ta question ici !
-
-```
-
----
-
-Souhaites-tu que je t’ajoute en haut un petit **titre stylisé** avec badges GitHub (Node.js, React, MongoDB, License, etc.) pour rendre ton `README.md` plus pro ?
-```
+💬 Besoin d’aide ?
+Ouvre une issue sur GitHub ou pose ta question ici !
