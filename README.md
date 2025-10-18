@@ -48,6 +48,9 @@ net start MongoDB
 
 ---
 
+Très bien — j’ai nettoyé et formaté ta section en **Markdown propre**, avec le texte normal lisible et les blocs de code corrects. Copie-colle directement ceci dans ton `README.md` :
+
+````markdown
 ## 🚀 Installation — Étape par Étape
 
 ### 🧩 Étape 1 — Cloner le projet depuis GitHub
@@ -62,45 +65,55 @@ git clone https://github.com/koala090/school-management.git
 
 # Entre dans le dossier du projet
 cd school-management
-✅ Le projet est maintenant téléchargé avec la structure complète (backend/ + frontend/).```
+````
 
+✅ Le projet est maintenant téléchargé avec la structure complète (`backend/` + `frontend/`).
+
+---
 
 ### ⚙️ Étape 2 — Installer le backend
-``` bash
-Copy code
+
+```bash
 # Va dans le dossier backend
 cd backend
 
 # Installe les dépendances
 npm install
-👉 Vérifie (ou crée) le fichier .env à la racine de backend/ :
+```
 
-env
-Copy code
+👉 Vérifie (ou crée) le fichier `.env` à la racine de `backend/` :
+
+```env
 MONGODB_URI=mongodb://localhost:27017/school_db
 JWT_SECRET=your_super_secret_key_12345
 PORT=5000
-Modifie MONGODB_URI si tu utilises MongoDB Atlas.
+```
+
+Modifie `MONGODB_URI` si tu utilises MongoDB Atlas.
 
 Lance le backend :
 
-bash
-Copy code
+```bash
 # (optionnel) insère les données de test
 npm run seed
 
 # démarre le serveur en dev
 npm run dev
+```
+
 ✅ Tu dois voir un message du type :
 
-arduino
-Copy code
+```
 🚀 Server running on http://localhost:5000
+```
+
+---
+
 ### 🖥️ Étape 3 — Installer le frontend
+
 Ouvre un nouveau terminal (pour garder le backend en cours) puis :
 
-bash
-Copy code
+```bash
 # Va dans le dossier frontend
 cd frontend
 
@@ -109,72 +122,88 @@ npm install
 
 # Lance le serveur de développement
 npm run dev
+```
+
 ✅ Tu dois voir :
 
-arduino
-Copy code
+```
 Local:   http://localhost:5173/
-🎯 Tester l’application (mode rapide)
+```
+
+---
+
+### 🎯 Tester l’application (mode rapide)
+
 Ouvre deux terminaux (ou onglets) :
 
-Terminal 1
+**Terminal 1**
 
-bash
-Copy code
+```bash
 cd school-management\backend
 npm run dev
-Terminal 2
+```
 
-bash
-Copy code
+**Terminal 2**
+
+```bash
 cd school-management\frontend
 npm run dev
-Ouvre ton navigateur à : http://localhost:5173
+```
 
-Compte de test :
+Ouvre ton navigateur à : `http://localhost:5173`
 
-graphql
-Copy code
+**Compte de test :**
+
+```
 Email: parent1@gmail.com
 Mot de passe: parent1@123
-⚠️ Dépannage (Windows)
-MongoDB n’a pas démarré
+```
 
-bash
-Copy code
+---
+
+### ⚠️ Dépannage (Windows)
+
+**MongoDB n’a pas démarré**
+
+```bash
 # Ouvrir PowerShell en tant qu'administrateur
 net start MongoDB
-Le port 5000 ou 5173 est déjà utilisé
+```
 
-bash
-Copy code
+**Le port 5000 ou 5173 est déjà utilisé**
+
+```bash
 netstat -ano | findstr :5000
 # puis, si nécessaire
 taskkill /PID <PID> /F
-Commande npm introuvable
+```
 
-Node.js n’est pas correctement installé : redémarre le PC ou réinstalle Node.js en cochant "Add to PATH".
+**Commande `npm` introuvable**
+Node.js n’est pas correctement installé : redémarre le PC ou réinstalle Node.js en cochant **"Add to PATH"**.
 
-Erreur Cannot find module
+**Erreur `Cannot find module`**
 
-bash
-Copy code
+```bash
 # Supprime et réinstalle les dépendances
 rm -r node_modules
 rm package-lock.json
 npm install
-Utilisation de MongoDB Atlas
+```
 
-Dans backend/.env, remplace MONGODB_URI par ta chaîne Atlas :
+**Utilisation de MongoDB Atlas**
+Dans `backend/.env`, remplace `MONGODB_URI` par ta chaîne Atlas :
 
-env
-Copy code
+```env
 MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/school_db
-Remplace user et password par tes identifiants Atlas.
+```
 
-📁 Structure détaillée du projet
-pgsql
-Copy code
+Remplace `user` et `password` par tes identifiants Atlas.
+
+---
+
+## 📁 Structure détaillée du projet
+
+```
 C:\Users\TonNom\Desktop\school-management
 ├── backend
 │   ├── server.js
@@ -226,4 +255,8 @@ C:\Users\TonNom\Desktop\school-management
         │   └── Absences.jsx
         └── utils
             └── api.js
+```
+
+---
+
 
