@@ -62,10 +62,11 @@ git clone https://github.com/koala090/school-management.git
 
 # Entre dans le dossier du projet
 cd school-management
-✅ Le projet est maintenant téléchargé avec la structure complète (backend/ + frontend/).
+✅ Le projet est maintenant téléchargé avec la structure complète (backend/ + frontend/).```
 
-⚙️ Étape 2 — Installer le backend
-bash
+
+### ⚙️ Étape 2 — Installer le backend
+``` bash
 Copy code
 # Va dans le dossier backend
 cd backend
@@ -95,7 +96,7 @@ npm run dev
 arduino
 Copy code
 🚀 Server running on http://localhost:5000
-🖥️ Étape 3 — Installer le frontend
+### 🖥️ Étape 3 — Installer le frontend
 Ouvre un nouveau terminal (pour garder le backend en cours) puis :
 
 bash
