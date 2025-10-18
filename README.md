@@ -226,29 +226,4 @@ C:\Users\TonNom\Desktop\school-management
         │   └── Absences.jsx
         └── utils
             └── api.js
-🧠 Description rapide
-Backend
 
-server.js — point d’entrée Express.
-
-config/db.js — connexion à MongoDB.
-
-routes/ — routes API (auth, notes, absences).
-
-middleware/ — middleware JWT (auth).
-
-models/ — schémas Mongoose (User, Note, Absence).
-
-controllers/ — logique métier.
-
-seeds/seedDB.js — données de test.
-
-.env — variables d’environnement.
-
-Frontend
-
-index.html — racine Vite/React.
-
-src/ — code source React (components, pages, context, utils).
-
-vite.config.js, tailwind.config.js, postcss.config.js — configurations.
