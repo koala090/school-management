@@ -48,9 +48,8 @@ net start MongoDB
 
 ---
 
-Très bien — j’ai nettoyé et formaté ta section en **Markdown propre**, avec le texte normal lisible et les blocs de code corrects. Copie-colle directement ceci dans ton `README.md` :
 
-````markdown
+
 ## 🚀 Installation — Étape par Étape
 
 ### 🧩 Étape 1 — Cloner le projet depuis GitHub
