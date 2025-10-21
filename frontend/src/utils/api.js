@@ -1,3 +1,4 @@
+
 // frontend/src/utils/api.js
 import axios from 'axios';
 
@@ -21,6 +22,7 @@ export const authAPI = {
 
 export const notesAPI = {
   getNotes: () => api.get('/notes'),
+  getStats: (studentId) => api.get(`/notes/stats/${studentId}`),
   createNote: (data) => api.post('/notes', data),
   updateNote: (id, data) => api.put(`/notes/${id}`, data),
   deleteNote: (id) => api.delete(`/notes/${id}`)

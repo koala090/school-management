@@ -12,6 +12,9 @@ router.get('/', verifyToken, async (req, res) => {
 
     if (req.user.role === 'parent') {
       query.studentId = req.user.childId;
+    } else if (req.user.role === 'prof') {
+      // Les profs voient SEULEMENT les absences de leur matière
+      query.subject = req.user.subject;
     }
 
     const absences = await Absence.find(query).sort({ date: -1 });
@@ -21,13 +24,18 @@ router.get('/', verifyToken, async (req, res) => {
   }
 });
 
-// POST marquer une absence (prof)
+// POST marquer une absence (prof) - SEULEMENT SA MATIÈRE
 router.post('/', verifyToken, verifyRole(['prof']), async (req, res) => {
   try {
     const { studentId, subject, date, status } = req.body;
 
     if (!studentId || !subject || !date) {
       return res.status(400).json({ error: 'Champs requis manquants' });
+    }
+
+    // Vérifier que le prof saisit SEULEMENT ses propres absences
+    if (subject !== req.user.subject) {
+      return res.status(403).json({ error: `Vous ne pouvez saisir que des absences en ${req.user.subject}` });
     }
 
     const absence = new Absence({
@@ -85,3 +93,30 @@ router.delete('/:id', verifyToken, verifyRole(['prof']), async (req, res) => {
 });
 
 export default router;
+
+// Nouvelle route pour les statistiques d'absences
+router.get('/stats/:studentId', verifyToken, async (req, res) => {
+  try {
+    const studentId = parseInt(req.params.studentId);
+
+    // Vérifier que le parent accède seulement aux stats de son enfant
+    if (req.user.role === 'parent' && req.user.childId !== studentId) {
+      return res.status(403).json({ error: 'Accès refusé' });
+    }
+
+    const absences = await Absence.find({ studentId });
+
+    const total = absences.length;
+    const absents = absences.filter(a => a.status === 'absent').length;
+    const justified = absences.filter(a => a.status === 'justified').length;
+
+    res.json({
+      total,
+      absents,
+      justified,
+      present: 0 // À calculer si besoin
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors du calcul des statistiques d\'absences' });
+  }
+});
