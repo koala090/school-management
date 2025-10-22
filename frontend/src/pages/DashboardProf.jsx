@@ -5,6 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import { notesAPI, absencesAPI } from '../utils/api';
 import TableNotes from '../components/TableNotes';
 import TableAbsences from '../components/TableAbsences';
+import FormAddNote from '../components/FormAddNote';
+import FormAddAbsence from '../components/FormAddAbsence';
 
 export default function DashboardProf() {
   const { user, logout } = useAuth();
@@ -35,84 +37,82 @@ export default function DashboardProf() {
     }
   };
 
+  const showNotification = (message, isSuccess = true) => {
+    if (isSuccess) {
+      setSuccess(message);
+      setTimeout(() => setSuccess(''), 3000);
+    } else {
+      setError(message);
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
   const handleAddNote = async (data) => {
     try {
-      setError('');
-      setSuccess('');
       const response = await notesAPI.createNote(data);
-      setNotes([...notes, response.data]);
-      setSuccess('✅ Note ajoutée avec succès');
-      setTimeout(() => setSuccess(''), 3000);
+      setNotes([response.data, ...notes]);
+      showNotification('✅ Note ajoutée avec succès');
     } catch (err) {
-      setError('❌ Erreur lors de l\'ajout de la note');
+      const errorMsg = err.response?.data?.error || 'Erreur lors de l\'ajout';
+      showNotification(errorMsg, false);
     }
   };
 
   const handleUpdateNote = async (id, data) => {
     try {
-      setError('');
-      setSuccess('');
       const response = await notesAPI.updateNote(id, data);
       setNotes(notes.map(n => n._id === id ? response.data : n));
-      setSuccess('✅ Note modifiée avec succès');
-      setTimeout(() => setSuccess(''), 3000);
+      showNotification('✅ Note modifiée');
     } catch (err) {
-      setError('❌ Erreur lors de la modification');
+      const errorMsg = err.response?.data?.error || 'Erreur lors de la modification';
+      showNotification(errorMsg, false);
     }
   };
 
   const handleDeleteNote = async (id) => {
     if (window.confirm('Êtes-vous sûr ?')) {
       try {
-        setError('');
-        setSuccess('');
         await notesAPI.deleteNote(id);
         setNotes(notes.filter(n => n._id !== id));
-        setSuccess('✅ Note supprimée');
-        setTimeout(() => setSuccess(''), 3000);
+        showNotification('✅ Note supprimée');
       } catch (err) {
-        setError('❌ Erreur lors de la suppression');
+        const errorMsg = err.response?.data?.error || 'Erreur lors de la suppression';
+        showNotification(errorMsg, false);
       }
     }
   };
 
   const handleAddAbsence = async (data) => {
     try {
-      setError('');
-      setSuccess('');
       const response = await absencesAPI.createAbsence(data);
-      setAbsences([...absences, response.data]);
-      setSuccess('✅ Absence enregistrée');
-      setTimeout(() => setSuccess(''), 3000);
+      setAbsences([response.data, ...absences]);
+      showNotification('✅ Absence enregistrée');
     } catch (err) {
-      setError('❌ Erreur lors de l\'enregistrement');
+      const errorMsg = err.response?.data?.error || 'Erreur lors de l\'enregistrement';
+      showNotification(errorMsg, false);
     }
   };
 
   const handleUpdateAbsence = async (id, data) => {
     try {
-      setError('');
-      setSuccess('');
       const response = await absencesAPI.updateAbsence(id, data);
       setAbsences(absences.map(a => a._id === id ? response.data : a));
-      setSuccess('✅ Absence modifiée');
-      setTimeout(() => setSuccess(''), 3000);
+      showNotification('✅ Absence modifiée');
     } catch (err) {
-      setError('❌ Erreur lors de la modification');
+      const errorMsg = err.response?.data?.error || 'Erreur lors de la modification';
+      showNotification(errorMsg, false);
     }
   };
 
   const handleDeleteAbsence = async (id) => {
     if (window.confirm('Êtes-vous sûr ?')) {
       try {
-        setError('');
-        setSuccess('');
         await absencesAPI.deleteAbsence(id);
         setAbsences(absences.filter(a => a._id !== id));
-        setSuccess('✅ Absence supprimée');
-        setTimeout(() => setSuccess(''), 3000);
+        showNotification('✅ Absence supprimée');
       } catch (err) {
-        setError('❌ Erreur lors de la suppression');
+        const errorMsg = err.response?.data?.error || 'Erreur lors de la suppression';
+        showNotification(errorMsg, false);
       }
     }
   };
@@ -124,7 +124,7 @@ export default function DashboardProf() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <p className="text-xl text-gray-600">Chargement...</p>
       </div>
     );
@@ -136,8 +136,11 @@ export default function DashboardProf() {
       <header className="bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">👨‍🏫 Espace Professeur</h1>
+            <h1 className="text-3xl font-bold text-gray-800">👨‍🏫 Espace Professeur</h1>
             <p className="text-sm text-gray-600">Connecté en tant que {user?.email}</p>
+            <div className="mt-2 inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+              📚 Matière: {user?.subject || 'Non définie'}
+            </div>
           </div>
           <button
             onClick={handleLogout}
@@ -150,7 +153,7 @@ export default function DashboardProf() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Messages */}
+        {/* Notifications */}
         {error && (
           <div className="mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
             {error}
@@ -189,22 +192,32 @@ export default function DashboardProf() {
 
           <div className="p-6">
             {activeTab === 'notes' && (
-              <TableNotes
-                notes={notes}
-                onAdd={handleAddNote}
-                onUpdate={handleUpdateNote}
-                onDelete={handleDeleteNote}
-                isProf={true}
-              />
+              <div>
+                <FormAddNote 
+                  userSubject={user?.subject} 
+                  onSubmit={handleAddNote}
+                />
+                <TableNotes
+                  notes={notes}
+                  onUpdate={handleUpdateNote}
+                  onDelete={handleDeleteNote}
+                  isProf={true}
+                />
+              </div>
             )}
             {activeTab === 'absences' && (
-              <TableAbsences
-                absences={absences}
-                onAdd={handleAddAbsence}
-                onUpdate={handleUpdateAbsence}
-                onDelete={handleDeleteAbsence}
-                isProf={true}
-              />
+              <div>
+                <FormAddAbsence 
+                  userSubject={user?.subject} 
+                  onSubmit={handleAddAbsence}
+                />
+                <TableAbsences
+                  absences={absences}
+                  onUpdate={handleUpdateAbsence}
+                  onDelete={handleDeleteAbsence}
+                  isProf={true}
+                />
+              </div>
             )}
           </div>
         </div>

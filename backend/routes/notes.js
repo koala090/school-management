@@ -1,3 +1,4 @@
+
 // backend/routes/notes.js
 import express from 'express';
 import { Note, Student } from '../config/db.js';
@@ -36,6 +37,19 @@ router.post('/', verifyToken, verifyRole(['prof']), async (req, res) => {
     // Vérifier que le prof saisit SEULEMENT ses propres notes
     if (subject !== req.user.subject) {
       return res.status(403).json({ error: `Vous ne pouvez saisir que des notes en ${req.user.subject}` });
+    }
+
+    // VÉRIFICATION: Voir si une note existe déjà pour cet étudiant dans cette matière
+    const noteExistante = await Note.findOne({
+      studentId: parseInt(studentId),
+      subject: subject
+    });
+
+    if (noteExistante) {
+      return res.status(409).json({ 
+        error: `Cet étudiant a déjà une note en ${subject}. Veuillez la modifier au lieu d'en créer une nouvelle.`,
+        existingNote: noteExistante._id
+      });
     }
 
     // Calcul: CC (40%) + Examen (60%)

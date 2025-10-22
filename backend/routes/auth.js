@@ -19,13 +19,21 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
     }
 
-    // Simple password check (en production, utiliser bcrypt)
     if (user.password !== password) {
       return res.status(401).json({ error: 'Email ou mot de passe incorrect' });
     }
 
+    // Construire les données du token
+    const tokenData = {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+      childId: user.childId,
+      subject: user.subject
+    };
+
     const token = jwt.sign(
-      { id: user._id, email: user.email, role: user.role, childId: user.childId },
+      tokenData,
       process.env.JWT_SECRET,
       { expiresIn: '24h' }
     );
@@ -36,7 +44,8 @@ router.post('/login', async (req, res) => {
         id: user._id,
         email: user.email,
         role: user.role,
-        childId: user.childId
+        childId: user.childId,
+        subject: user.subject
       }
     });
   } catch (error) {

@@ -1,3 +1,4 @@
+
 // backend/seeds/seedDB.js
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
@@ -22,9 +23,10 @@ const seedDB = async () => {
       { email: 'parent1@gmail.com', password: 'parent1@123', role: 'parent', childId: 1 },
       { email: 'parent2@gmail.com', password: 'parent2@123', role: 'parent', childId: 2 },
       { email: 'parent3@gmail.com', password: 'parent3@123', role: 'parent', childId: 3 },
-      { email: 'prof1@gmail.com', password: 'prof1@123', role: 'prof', subject: 'Mathématiques' },
-      { email: 'prof2@gmail.com', password: 'prof2@123', role: 'prof', subject: 'Management de projet' },
-      { email: 'prof3@gmail.com', password: 'prof3@123', role: 'prof', subject: 'Français' }
+      { email: 'prof_math@gmail.com', password: 'prof1@123', role: 'prof', subject: 'Mathématiques' },
+      { email: 'prof_management@gmail.com', password: 'prof2@123', role: 'prof', subject: 'Management de projet' },
+      { email: 'prof_francais@gmail.com', password: 'prof3@123', role: 'prof', subject: 'Français' },
+      { email: 'prof_sciences@gmail.com', password: 'prof4@123', role: 'prof', subject: 'Sciences' }
     ];
     await User.insertMany(users);
     console.log('✅ Users créés');
@@ -59,13 +61,16 @@ const seedDB = async () => {
     await Note.insertMany(notes);
     console.log('✅ Notes créées');
 
-    // Create Absences
+    // Create Absences (maintenant avec Sciences et d'autres matières)
     const absences = [
       { studentId: 1, subject: 'Mathématiques', date: new Date('2024-10-10'), status: 'absent' },
       { studentId: 1, subject: 'Français', date: new Date('2024-10-12'), status: 'justified' },
+      { studentId: 1, subject: 'Sciences', date: new Date('2024-10-14'), status: 'present' },
       { studentId: 2, subject: 'Management de projet', date: new Date('2024-10-08'), status: 'absent' },
+      { studentId: 2, subject: 'Français', date: new Date('2024-10-11'), status: 'justified' },
       { studentId: 3, subject: 'Sciences', date: new Date('2024-10-15'), status: 'absent' },
-      { studentId: 3, subject: 'Mathématiques', date: new Date('2024-10-11'), status: 'justified' }
+      { studentId: 3, subject: 'Mathématiques', date: new Date('2024-10-11'), status: 'justified' },
+      { studentId: 3, subject: 'Management de projet', date: new Date('2024-10-13'), status: 'present' }
     ];
     await Absence.insertMany(absences);
     console.log('✅ Absences créées');

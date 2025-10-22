@@ -1,3 +1,4 @@
+
 // backend/config/db.js
 import mongoose from 'mongoose';
 
@@ -20,7 +21,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, enum: ['parent', 'prof', 'admin'], default: 'parent' },
-  childId: { type: Number, default: null }
+  childId: { type: Number, default: null },
+  subject: { type: String, default: null } // ⭐ AJOUT: Matière du professeur
 });
 
 const studentSchema = new mongoose.Schema({
