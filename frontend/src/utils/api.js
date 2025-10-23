@@ -1,4 +1,3 @@
-
 // frontend/src/utils/api.js
 import axios from 'axios';
 
@@ -30,6 +29,7 @@ export const notesAPI = {
 
 export const absencesAPI = {
   getAbsences: () => api.get('/absences'),
+  getStats: (studentId) => api.get(`/absences/stats/${studentId}`), // ✅ AJOUT
   createAbsence: (data) => api.post('/absences', data),
   updateAbsence: (id, data) => api.put(`/absences/${id}`, data),
   deleteAbsence: (id) => api.delete(`/absences/${id}`)
