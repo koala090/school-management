@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import DashboardParent from './pages/DashboardParent';
 import DashboardProf from './pages/DashboardProf';
+import ForgotPassword from './pages/ForgotPassword';
 
 function ProtectedRoute({ children }) {
   const { token } = useAuth();
@@ -23,6 +24,10 @@ function App() {
           <Route 
             path="/dashboard/prof" 
             element={<ProtectedRoute><DashboardProf /></ProtectedRoute>} 
+          />
+          <Route 
+            path="/forgot-password" 
+            element={<ForgotPassword />} 
           />
           <Route path="/" element={<Navigate to="/login" />} />
         </Routes>

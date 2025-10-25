@@ -69,7 +69,9 @@ export default function Login() {
               {error}
             </div>
           )}
-
+          <div className='text-gray-700 text-sm text-right' >
+            <p>Mot de passe oublié ? <span className='text-blue-500 hover:underline cursor-pointer'  onClick={() => navigate('/forgot-password')}>Réinitialiser</span></p>
+          </div>
           <button
             type="submit"
             disabled={loading}
@@ -87,8 +89,8 @@ export default function Login() {
           <p>parent2@gmail.com / parent2@123</p>
           
           <p className="font-bold mt-3">👨‍🏫 Professeurs:</p>
-          <p>prof1@gmail.com / prof1@123</p>
-          <p>prof2@gmail.com / prof2@123</p>
+          <p>prof_math@gmail.com /prof1@123</p>
+          <p>prof_management@gmail.com / prof2@123</p>
         </div>
       </div>
     </div>

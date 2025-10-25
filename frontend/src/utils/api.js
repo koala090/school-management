@@ -16,8 +16,11 @@ api.interceptors.request.use((config) => {
 });
 
 export const authAPI = {
-  login: (email, password) => api.post('/auth/login', { email, password })
+  login: (email, password) => api.post('/auth/login', { email, password }),
+  resetPassword: (email, newPassword) =>
+    api.post('/auth/reset-password', { email, newPassword }),
 };
+
 
 export const notesAPI = {
   getNotes: () => api.get('/notes'),
@@ -34,5 +37,7 @@ export const absencesAPI = {
   updateAbsence: (id, data) => api.put(`/absences/${id}`, data),
   deleteAbsence: (id) => api.delete(`/absences/${id}`)
 };
+
+
 
 export default api;
